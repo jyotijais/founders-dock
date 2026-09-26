@@ -1,7 +1,19 @@
+# NOTE: `.env` is excluded on purpose.
+# Vite bakes VITE_* values in at BUILD time, and they are supplied
+# as Docker build args by CI (see the Dockerfile). Shipping a .env
+# file in the build context would bake values into the image layer,
+# where they can never be removed.
 node_modules
 dist
+dist-ssr
+
 .git
 .gitignore
+.github
 Dockerfile
-docker-compose.yml
+.dockerignore
+docker-compose*.yml
 .env
+.env.*
+!.env.example
+*.log

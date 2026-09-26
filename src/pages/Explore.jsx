@@ -3,7 +3,7 @@ import { db } from '../firebase/firebase.config.js';
 import { collection, getDocs, query, orderBy, doc, getDoc, updateDoc, arrayUnion, arrayRemove, setDoc } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
-import ContactModal from './ContactModal.jsx';;
+import ContactModal from '../components/pitch/ContactModal.jsx';
 
 const Explore = () => {
     const [pitches, setPitches] = useState([]);
