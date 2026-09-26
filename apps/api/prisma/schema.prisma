@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model pitches {
+  id            Int             @id @default(autoincrement())
+  title         String          @db.VarChar(255)
+  description   String
+  industry      String?         @db.VarChar(100)
+  stage         String?         @db.VarChar(50)
+  funding_goal  String?         @db.VarChar(50)
+  location      String?         @db.VarChar(255)
+  team_size     Int?
+  tags          String[]
+  user_id       Int?
+  firebase_uid  String?         @db.VarChar(128)
+  created_at    DateTime?       @default(now()) @db.Timestamp(6)
+  website       String?         @db.VarChar(255)
+  linkedin      String?         @db.VarChar(255)
+  users         users?          @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  saved_pitches saved_pitches[]
+}
+
+model saved_pitches {
+  id         Int       @id @default(autoincrement())
+  user_id    Int?
+  pitch_id   Int?
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+  pitches    pitches?  @relation(fields: [pitch_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users      users?    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([user_id, pitch_id])
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model users {
+  id            Int             @id @default(autoincrement())
+  firebase_uid  String          @unique @db.VarChar(128)
+  email         String          @unique @db.VarChar(255)
+  name          String?         @db.VarChar(255)
+  role          String?         @db.VarChar(20)
+  photo_url     String?
+  created_at    DateTime?       @default(now()) @db.Timestamp(6)
+  pitches       pitches[]
+  saved_pitches saved_pitches[]
+}
