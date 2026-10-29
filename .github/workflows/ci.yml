@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [ main, test-branch ]
+    branches: [ master, test-branch ]
   pull_request:
 
 jobs:
@@ -55,7 +55,7 @@ jobs:
           context: ./apps/web
           file: ./apps/web/Dockerfile
           push: true
-          tags: ghcr.io/${{ github.respository_owner }}/foundersdoc-web:latest
+          tags: ghcr.io/${{ github.repository_owner }}/foundersdock-web:latest
       - uses: docker/build-push-action@v6
         with:
           context: ./apps/api
