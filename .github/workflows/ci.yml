@@ -38,8 +38,7 @@ jobs:
       - run: npm ci
       - run: npx prisma generate
       - run: node --check src/index.js
-  
-    docker:
+  docker:
     name: Docker Build & Push
     runs-on: ubuntu-latest
     permissions:
